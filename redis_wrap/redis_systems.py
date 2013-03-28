@@ -15,10 +15,13 @@ def get_redis(system='default'):
 
 class redis_obj:
 
-    def __init__(self, name, system):
+    def __init__(self, name, system='default'):
         self.name = name
+        self.system = system
         self.conn = get_redis(system)
 
     def clear(self):
         self.conn.delete(self.name)
 
+    def __del__(self):
+        self.conn.delete(self.name)
