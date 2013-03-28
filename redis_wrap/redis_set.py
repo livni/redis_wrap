@@ -71,15 +71,39 @@ class SetFu (redis_obj):
         self.difference_update(other)
         return self
 
+    def __sub__(self, other):
+        newset = SetFu('set_oper_sub_%s-%s'%(self.name, other.name), self.system)
+        newset.update(self)
+        newset -=other
+        return newset
+
     def __iand__(self, other):
         self.intersection_update(other)
         return self
+
+    def __and__(self, other):
+        newset = SetFu('set_oper_and_%s-%s'%(self.name, other.name), self.system)
+        newset.update(self)
+        newset &= other
+        return newset
 
     def __ixor__(self, other):
         self.symmetric_difference_update(other)
         return self
 
+    def __xor__(self, other):
+        newset = SetFu('set_oper_xor_%s-%s'%(self.name, other.name), self.system)
+        newset.update(self)
+        newset ^= other
+        return newset
+
     def __ior__(self, other):
         self.update(other)
         return self
+
+    def __or__(self, other):
+        newset = SetFu('set_oper_or_%s-%s'%(self.name, other.name), self.system)
+        newset.update(self)
+        newset |= other
+        return newset
 

@@ -159,12 +159,18 @@ def test_set():
 
     other_fishes = get_set('other_fishes')
     other_fishes.update(('gill', 'bloat', 'flo'))
+
+    assert set(fishes | other_fishes) == set(['nemo','marlin', 'dory', 'crush', 'gill', 'bloat', 'flo'])
+    assert set(fishes) == set (['nemo','marlin', 'dory', 'crush'])
     fishes |= other_fishes
     assert set(fishes) == set(['nemo','marlin', 'dory', 'crush', 'gill', 'bloat', 'flo'])
 
     fishes.intersection_update(('nemo','marlin', 'dory', 'crush', 'gill', 'deb', 'bloat'))
     assert set(fishes) == set(['nemo','marlin', 'dory', 'crush', 'gill', 'bloat'])
     fishes &= ('nemo','marlin', 'dory', 'gill', 'bloat', 'gurgle')
+    assert set(fishes) == set(['nemo','marlin', 'dory', 'gill', 'bloat'])
+
+    assert set(fishes & other_fishes) == set(['gill', 'bloat'])
     assert set(fishes) == set(['nemo','marlin', 'dory', 'gill', 'bloat'])
     fishes &= other_fishes
     assert set(fishes) == set(['gill', 'bloat'])
@@ -181,6 +187,8 @@ def test_set():
 
     fishes.clear()
     fishes.update(('nemo','marlin', 'dory', 'gill', 'bloat'))
+    assert set(fishes-other_fishes) == set(['nemo','marlin', 'dory'])
+    assert set(fishes) == set(['nemo','marlin', 'dory', 'gill', 'bloat'])
     fishes -= other_fishes
     assert set(fishes) == set(['nemo','marlin', 'dory'])
 
@@ -196,8 +204,11 @@ def test_set():
 
     fishes.clear()
     fishes.update(('nemo','marlin', 'dory', 'gill', 'bloat'))
+    assert set(fishes ^ other_fishes) == set(['nemo','marlin', 'dory', 'flo'])
+    assert set(fishes) == set(['nemo','marlin', 'dory', 'gill', 'bloat'])
     fishes ^= other_fishes
     assert set(fishes) == set(['nemo','marlin', 'dory', 'flo'])
+
     print sys._getframe(0).f_code.co_name, 'ok.'
 
 def test_bitset():
