@@ -41,12 +41,22 @@ def test_list():
     except IndexError:
         pass
 
+    cats = get_list('cats')
+    cats += ['cheetah', 'panther']
+    beasts = bears + cats
+    assert isinstance(beasts, type(bears))
+    assert beasts[:] == ['grizzly', 'white bear', 'nice bear', 'cheetah', 'panther']
+
     bears.extend(['polar bear', 'gummy bear'])
     assert bears[1:2] == ['white bear', 'nice bear']
     assert bears[2:4] == ['nice bear', 'polar bear', 'gummy bear']
 
     bears.remove('grizzly')
     assert 'grizzly' not in bears
+
+    bears += ('care bear', 'smokey bear')
+    assert bears[:] == ['white bear', 'nice bear', 'polar bear',
+                        'gummy bear', 'care bear', 'smokey bear']
 
     print sys._getframe(0).f_code.co_name, 'ok.'
 

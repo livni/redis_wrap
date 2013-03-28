@@ -49,3 +49,12 @@ class ListFu (redis_obj):
                 yield item
             i += 30
 
+    def __iadd__(self, other):
+        self.conn.rpush(self.name, *other)
+        return self
+
+    def __add__(self, other):
+        nl = ListFu('_oper_add-%s-%s'%(self.name, other.name), self.system)
+        nl += self
+        nl += other
+        return nl
