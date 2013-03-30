@@ -54,10 +54,31 @@ class BitsetFu (redis_obj):
         self.intersection_update(other)
         return self
 
+    def __and__(self, other):
+        newset = BitsetFu('bitset_oper_and_%s-%s'%(self.name, other.name),
+            self.system, persistent=False)
+        newset.update(self)
+        newset &= other
+        return newset
+
     def __ixor__(self, other):
         self.symmetric_difference_update(other)
         return self
 
+    def __xor__(self, other):
+        newset = BitsetFu('set_oper_xor_%s-%s'%(self.name, other.name),
+            self.system, persistent=False)
+        newset.update(self)
+        newset ^= other
+        return newset
+
     def __ior__(self, other):
         self.update(other)
         return self
+
+    def __or__(self, other):
+        newset = BitsetFu('bitset_oper_or_%s-%s'%(self.name, other.name),
+            self.system, persistent=False)
+        newset.update(self)
+        newset |= other
+        return newset

@@ -42,6 +42,7 @@ def test_list():
         pass
 
     cats = get_list('cats')
+    cats.clear()
     cats += ['cheetah', 'panther']
     beasts = bears + cats
     assert isinstance(beasts, type(bears))
@@ -230,12 +231,24 @@ def test_bitset():
     assert set(users) == set([3,4,5])
 
     others = get_bitset('others')
+    others.clear()
     others |= (4,6,8)
+    assert set(others) == set([4,6,8])
+    assert set(users | others) == set([3,4,5,6,8])
     assert set(others) == set([4,6,8])
     users |= others
     assert set(users) == set([3,4,5,6,8])
 
+    others.clear()
+    others |= (4,5,6,7,8)
+    assert set(users & others) == set([4,5,6,8])
+    assert set(users) == set([3,4,5,6,8])
     users &= (4,5,6,7,8)
+    assert set(users) == set([4,5,6,8])
+
+    others.clear()
+    others |= (6,8,10)
+    assert set(users ^ others) == set([4,5,10])
     assert set(users) == set([4,5,6,8])
 
     users.clear()
