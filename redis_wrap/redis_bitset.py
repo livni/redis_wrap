@@ -43,7 +43,3 @@ class BitsetFu (SetOperators, redis_obj):
     def __contains__(self, item):
         return self.conn.getbit(self.name, item)
 
-    def __iand__(self, other):
-        self.intersection_update(other)
-        return self
-
