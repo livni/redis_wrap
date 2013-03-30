@@ -2,6 +2,7 @@
 from redis_systems import *
 
 class SetFu (SetOperators, redis_obj):
+    type_name = 'set'
 
     def add(self, item):
         self.conn.sadd(self.name, item)

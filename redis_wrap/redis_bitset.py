@@ -2,6 +2,7 @@
 from redis_systems import *
 
 class BitsetFu (SetOperators, redis_obj):
+    type_name = 'bitset'
 
     def add(self, item):
         self.conn.setbit(self.name, item, True)
