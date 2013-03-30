@@ -13,7 +13,7 @@ def get_redis(system='default'):
     return SYSTEMS[system]
 
 
-class redis_obj:
+class redis_obj(object):
 
     def __init__(self, name, system='default', persistent=True):
         self.name = name
@@ -29,8 +29,28 @@ class redis_obj:
             self.conn.delete(self.name)
 
 
-class SetOperators:
+class SetOperators(object):
     type_name = ''
+
+    def update(self, other):
+        for item in other:
+            self.add(item)
+
+    def intersection_update(self, other):
+        for item in self:
+            if item not in other:
+                self.discard(item)
+
+    def difference_update(self, other):
+        for item in other:
+            self.discard(item)
+
+    def symmetric_difference_update(self, other):
+        for item in other:
+            if item in self:
+                self.remove(item)
+            else:
+                self.add(item)
 
     def __isub__(self, other):
         self.difference_update(other)

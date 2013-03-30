@@ -26,7 +26,11 @@ class ListFu (redis_obj):
 
     def __getitem__(self, key):
         if isinstance(key, slice):
-            return self.conn.lrange(self.name, key.start, key.stop)
+            start = key.start
+            if start == None: start = 0
+            stop = key.stop
+            if stop == None: stop = -1
+            return self.conn.lrange(self.name, start, stop)
 
         val = self.conn.lindex(self.name, key)
         if not val:

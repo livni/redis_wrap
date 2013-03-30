@@ -24,23 +24,19 @@ class SetFu (SetOperators, redis_obj):
         if isinstance(other, SetFu):
             self.conn.sunionstore(self.name, self.name, other.name)
         else:
-            for item in other:
-                self.add(item)
+            super(SetFu, self).update(other)
 
     def intersection_update(self, other):
         if isinstance(other, SetFu):
             self.conn.sinterstore(self.name, self.name, other.name)
         else:
-            for item in self:
-                if item not in other:
-                    self.discard(item)
+            super(SetFu, self).intersection_update(other)
 
     def difference_update(self, other):
         if isinstance(other, SetFu):
             self.conn.sdiffstore(self.name, self.name, other.name)
         else:
-            for item in other:
-                self.discard(item)
+            super(SetFu, self).difference_update(other)
 
     def symmetric_difference_update(self, other):
         if isinstance(other, SetFu):
@@ -51,11 +47,7 @@ class SetFu (SetOperators, redis_obj):
                 trans.delete('__transientkey-1__', '__transientkey-2__')
                 trans.execute()
         else:
-            for item in other:
-                if item in self:
-                    self.remove(item)
-                else:
-                    self.add(item)
+            super(SetFu, self).symmetric_difference_update(other)
 
     def __iter__(self):
         for item in self.conn.smembers(self.name):

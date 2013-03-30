@@ -18,26 +18,19 @@ class BitsetFu (SetOperators, redis_obj):
         if isinstance(other, BitsetFu):
             self.conn.bitop('OR', self.name, self.name, other.name)
         else:
-            for itm in other:
-                self.add(itm)
+            super(BitsetFu, self).update(other)
 
     def intersection_update(self, other):
         if isinstance(other, BitsetFu):
             self.conn.bitop('AND', self.name, self.name, other.name)
         else:
-            for item in self:
-                if item not in other:
-                    self.discard(item)
+            super(BitsetFu, self).intersection_update(other)
 
     def symmetric_difference_update(self, other):
         if isinstance(other, BitsetFu):
             self.conn.bitop('XOR', self.name, self.name, other.name)
         else:
-            for item in other:
-                if item in self:
-                    self.remove(item)
-                else:
-                    self.add(item)
+            super(BitsetFu, self).symmetric_difference_update(other)
 
     def __len__(self):
         return self.conn.bitcount(self.name)
