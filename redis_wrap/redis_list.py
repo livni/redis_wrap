@@ -54,7 +54,8 @@ class ListFu (redis_obj):
         return self
 
     def __add__(self, other):
-        nl = ListFu('_oper_add-%s-%s'%(self.name, other.name), self.system)
+        nl = ListFu('_oper_add-%s-%s'%(self.name, other.name),
+            self.system, persistent=False)
         nl += self
         nl += other
         return nl

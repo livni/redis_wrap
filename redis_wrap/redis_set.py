@@ -72,7 +72,8 @@ class SetFu (redis_obj):
         return self
 
     def __sub__(self, other):
-        newset = SetFu('set_oper_sub_%s-%s'%(self.name, other.name), self.system)
+        newset = SetFu('set_oper_sub_%s-%s'%(self.name, other.name),
+            self.system, persistent=False)
         newset.update(self)
         newset -=other
         return newset
@@ -82,7 +83,8 @@ class SetFu (redis_obj):
         return self
 
     def __and__(self, other):
-        newset = SetFu('set_oper_and_%s-%s'%(self.name, other.name), self.system)
+        newset = SetFu('set_oper_and_%s-%s'%(self.name, other.name),
+            self.system, persistent=False)
         newset.update(self)
         newset &= other
         return newset
@@ -92,7 +94,8 @@ class SetFu (redis_obj):
         return self
 
     def __xor__(self, other):
-        newset = SetFu('set_oper_xor_%s-%s'%(self.name, other.name), self.system)
+        newset = SetFu('set_oper_xor_%s-%s'%(self.name, other.name),
+            self.system, persistent=False)
         newset.update(self)
         newset ^= other
         return newset
@@ -102,7 +105,8 @@ class SetFu (redis_obj):
         return self
 
     def __or__(self, other):
-        newset = SetFu('set_oper_or_%s-%s'%(self.name, other.name), self.system)
+        newset = SetFu('set_oper_or_%s-%s'%(self.name, other.name),
+            self.system, persistent=False)
         newset.update(self)
         newset |= other
         return newset
