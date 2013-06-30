@@ -9,6 +9,9 @@ SYSTEMS = {
 def setup_system(name, host, port, **kw):
     SYSTEMS[name] = redis.Redis(host=host, port=port, **kw)
 
+def from_url(system, url, db=None, **kw):
+    SYSTEMS[system] = redis.from_url(url, db, **kw)
+
 def get_redis(system='default'):
     return SYSTEMS[system]
 
