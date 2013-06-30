@@ -33,15 +33,11 @@ class HashFu (redis_obj):
     def update(self, *args, **kwargs):
         for o in args:
             self._update(o)
-        self._update(kwargs)
+        if kwargs:
+            self._update(kwargs)
 
     def _update(self, other):
-        if hasattr(other, 'items'):
-            for k,v in other.items():
-                self[k] = v
-        else:
-            for k,v in other:
-                self[k] = v
+        self.conn.hmset(self.name, dict(other))
 
     def iter(self):
         for k in self.keys():
