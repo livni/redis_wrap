@@ -6,11 +6,11 @@ SYSTEMS = {
     'default': redis.Redis(host='localhost', port=6379)
 }
 
-def setup_system(name, host, port, **kw):
-    SYSTEMS[name] = redis.Redis(host=host, port=port, **kw)
+def setup_system(host, port, system='default', **kwargs):
+    SYSTEMS[system] = redis.Redis(host=host, port=port, **kwargs)
 
-def from_url(system, url, db=None, **kw):
-    SYSTEMS[system] = redis.from_url(url, db, **kw)
+def from_url(url, system='default', db=None, **kwargs):
+    SYSTEMS[system] = redis.from_url(url, db, **kwargs)
 
 def get_redis(system='default'):
     return SYSTEMS[system]
