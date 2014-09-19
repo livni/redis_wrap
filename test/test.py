@@ -1,5 +1,5 @@
 import sys
-from redis_wrap import get_redis, get_list, get_hash, get_set, get_bitset
+from .redis_wrap import get_redis, get_list, get_hash, get_set, get_bitset
 
 def raises(f, excpt):
     try:

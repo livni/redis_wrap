@@ -1,5 +1,5 @@
 
-from redis_systems import *
+from .redis_systems import *
 
 class ListFu (redis_obj):
 

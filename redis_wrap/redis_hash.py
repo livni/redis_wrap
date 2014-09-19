@@ -1,4 +1,4 @@
-from redis_systems import *
+from .redis_systems import *
 
 class HashFu (redis_obj):
 

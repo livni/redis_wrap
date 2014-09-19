@@ -1,5 +1,5 @@
 
-from redis_systems import *
+from .redis_systems import *
 
 class SetFu (SetOperators, redis_obj):
     type_name = 'set'
